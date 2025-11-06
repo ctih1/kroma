@@ -1,49 +1,7 @@
-from enum import Enum
 import os
 import sys
 import ctypes
 import functools
-
-
-ANSI = "\033["
-
-
-class AnsiCodes_Foreground(Enum):
-    RESET = f"{ANSI}0m"
-
-    RED = f"{ANSI}31m"
-    YELLOW = f"{ANSI}33m"
-    GREEN = f"{ANSI}32m"
-    CYAN = f"{ANSI}36m"
-    BLUE = f"{ANSI}34m"
-    PURPLE = f"{ANSI}35m"
-    WHITE = f"{ANSI}37m"
-
-
-class AnsiCodes_Background(Enum):
-    RESET = f"{ANSI}0m"
-
-    RED = f"{ANSI}41m"
-    YELLOW = f"{ANSI}43m"
-    GREEN = f"{ANSI}42m"
-    CYAN = f"{ANSI}46m"
-    BLUE = f"{ANSI}44m"
-    PURPLE = f"{ANSI}45m"
-    WHITE = f"{ANSI}47m"
-
-
-class LightAnsiCodes_Foreground(Enum):
-    RESET = f"{ANSI}0m"
-
-    LIGHT_CYAN = f"{ANSI}96m"
-    # todo: expand with more colors than just light cyan
-
-
-class LightAnsiCodes_Background(Enum):
-    RESET = f"{ANSI}0m"
-
-    LIGHT_CYAN = f"{ANSI}106m"
-    # todo: expand with more colors than just light cyan
 
 
 def enable_ansi() -> bool:

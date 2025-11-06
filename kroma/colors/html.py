@@ -8,7 +8,7 @@ class RGB(NamedTuple):
     b: int
 
 
-class HTMLColorName(Enum):
+class HTMLColor(Enum):
     # basic colors
     BLACK = "000000"
     SILVER = "C0C0C0"
