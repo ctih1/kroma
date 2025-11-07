@@ -23,6 +23,9 @@ def enable_ansi() -> bool:
 
 
 def supports_ansi(vt_enabled: bool) -> bool:
+    if os.getenv('NO_COLOR'):
+        return False
+
     if vt_enabled:
         return True
 
