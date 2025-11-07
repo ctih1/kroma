@@ -20,7 +20,13 @@ dependencies = [
     # Put dependencies here
 ]
 classifiers = [
-    "Operating System :: OS Independent",
+    # Development Status
+    "Development Status :: 4 - Beta",
+
+    # Intended Audience
+    "Intended Audience :: Developers",
+
+    # Supported Versions
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -31,4 +37,5 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/PowerPCFan/kroma"
+Repository = "https://github.com/PowerPCFan/kroma"
 Issues = "https://github.com/PowerPCFan/kroma/issues"
