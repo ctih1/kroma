@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kroma"
-version = "v1.1.0-beta"
+version = "v1.1.1"
 description = "A lightweight and powerful colors library for terminal output in Python."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -20,8 +20,11 @@ dependencies = [
     # Put dependencies here
 ]
 classifiers = [
+    # Uncomment to prohibit uploading
+    "Private :: Do Not Upload",
+
     # Development Status
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
 
     # Intended Audience
     "Intended Audience :: Developers",
