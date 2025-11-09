@@ -18,30 +18,46 @@ def _fix_text(text: str) -> str:
     return text
 
 
-def _convert_html_hex_to_ansi(text: str, color: HTMLColors | str, type: StyleType) -> str:
-    if isinstance(color, str):
-        # color is a HEX code
-        if "#" in color:
-            color = color.replace("#", "")
-        color = color.lower().strip()
-    else:
-        # color is a HTMLColor enum, get the corresponding hex code
-        color = color.value.lower().strip()
-
-    color_chars = [char for char in color]
-
-    rgb = RGB(
+def _convert_hex_code_to_rgb(hex_code: str) -> RGB:
+    hex_code = hex_code.lstrip("#").lower().strip()
+    color_chars = [char for char in hex_code]
+    return RGB(
         int(color_chars[0] + color_chars[1], 16),
         int(color_chars[2] + color_chars[3], 16),
         int(color_chars[4] + color_chars[5], 16)
     )
 
-    ansi_color = (
-        (ANSI + ("38" if type == StyleType.FOREGROUND else "48") + ";2;[r];[g];[b]m")
-        .replace("[r]", str(rgb.r))
-        .replace("[g]", str(rgb.g))
-        .replace("[b]", str(rgb.b))
-    )
+
+def _convert_rgb_to_hex_code(rgb: RGB) -> str:
+    return f"#{rgb.r:02X}{rgb.g:02X}{rgb.b:02X}"
+
+
+def _clamp(value: float) -> int:
+    new_value = round(value)
+
+    if new_value < 0:
+        return 0
+    elif new_value > 255:
+        return 255
+    else:
+        return new_value
+
+
+def _convert_rgb_to_ansi_sequence(rgb: RGB, type: StyleType) -> str:
+    r = str(rgb.r)
+    g = str(rgb.g)
+    b = str(rgb.b)
+    rgb_sequence = f";2;{r};{g};{b}m"
+    color_type = ("38" if type == StyleType.FOREGROUND else "48")
+
+    return ANSI + color_type + rgb_sequence
+
+
+def _convert_html_hex_to_ansi(text: str, color: HTMLColors | str, type: StyleType) -> str:
+    color = (color.replace("#", "") if isinstance(color, str) else color.value).lower().strip()
+
+    rgb = _convert_hex_code_to_rgb(color)
+    ansi_color = _convert_rgb_to_ansi_sequence(rgb, type)
 
     return _get_color_if_supported(ansi_color) + _fix_text(text) + _get_color_if_supported(RESET)
 
@@ -94,6 +110,7 @@ def _style_base(
     italic: bool,
     underline: bool,
     strikethrough: bool,
+    swap_foreground_background: bool,
     color_func: Callable[[str, HTMLColors | ANSIColors | str, StyleType], str],
     color_func_with_formatting: Callable[[str, HTMLColors | ANSIColors | str, StyleType, list[TextFormat] | None], str]
 ) -> str:
@@ -106,6 +123,8 @@ def _style_base(
         formats.append(TextFormat.UNDERLINE)
     if strikethrough:
         formats.append(TextFormat.STRIKETHROUGH)
+    if swap_foreground_background:
+        formats.append(TextFormat.SWAP_FOREGROUND_BACKGROUND)
 
     if foreground is None and background is None:
         if formats:

@@ -47,6 +47,21 @@ print(ansi_color.style(
 #* so, that means you can also leave out either the background or foreground argument to only set one of them.
 
 
+# ? Color manipulation
+# Note: the following example works for ansi_color as well, if you use the proper color enum.
+print(html_color.style(
+    "This is text with the foreground and background inverted.",
+    foreground=HTMLColors.BLUEVIOLET,
+    background=HTMLColors.BISQUE,
+    swap_foreground_background=True
+))
+print(html_color.style(
+    "This is text with the foreground and background colors manipulated at runtime.\n",
+    foreground=html_color.lighten(HTMLColors.GAINSBORO, 10),
+    background=html_color.darken("#2F4F4F", 20)
+))
+
+
 # ? Text formatting
 # Additionally, you can also apply bold, italic, underline, and strikethrough text formatting to your text.
 # This works for both html_color.style and ansi_color.style functions.

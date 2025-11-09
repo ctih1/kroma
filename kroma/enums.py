@@ -13,6 +13,7 @@ class TextFormat(Enum):
     ITALIC = f"{ANSI}3m"
     UNDERLINE = f"{ANSI}4m"
     STRIKETHROUGH = f"{ANSI}9m"
+    SWAP_FOREGROUND_BACKGROUND = f"{ANSI}7m"
 
 
 class ANSIColors(Enum):

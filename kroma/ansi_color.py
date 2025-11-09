@@ -9,7 +9,8 @@ def style(
     bold: bool = False,
     italic: bool = False,
     underline: bool = False,
-    strikethrough: bool = False
+    strikethrough: bool = False,
+    swap_foreground_background: bool = False
 ) -> str:
     return _style_base(
         text=text,
@@ -19,6 +20,7 @@ def style(
         italic=italic,
         underline=underline,
         strikethrough=strikethrough,
+        swap_foreground_background=swap_foreground_background,
         color_func=_get_ansi_color_code,
         color_func_with_formatting=_get_ansi_color_code_with_formatting
     )
